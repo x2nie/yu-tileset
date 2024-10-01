@@ -14,6 +14,20 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
+	// Event listener saat TextEditor yang aktif berubah
+    vscode.window.onDidChangeActiveTextEditor(editor => {
+		if (HelloWorldPanel.currentPanel && editor) {
+			// Update konten WebviewPanel dengan 3 baris pertama dari editor aktif
+            // panel.webview.html = getWebviewContentFromActiveEditor();
+			
+			// // Ambil 3 baris pertama dari dokumen aktif
+			// const firstThreeLines = editor.document.getText(new vscode.Range(0, 0, 3, 0));
+			// HelloWorldPanel.currentPanel.teaser(firstThreeLines);
+			HelloWorldPanel.currentPanel.changeActiveTextEditor(editor);
+     
+        }
+    }, null, context.subscriptions);
+
 	//keep the panel open while vscode restart
 	if (vscode.window.registerWebviewPanelSerializer) {
 		// Make sure we register a serializer in activation event

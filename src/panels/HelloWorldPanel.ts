@@ -1,4 +1,7 @@
-import { Disposable, Webview, WebviewPanel, window, Uri, ViewColumn } from "vscode";
+import {
+  Disposable, Webview, WebviewPanel, window, Uri, ViewColumn,
+  TextEditor, Range
+} from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
 
@@ -71,7 +74,8 @@ export class HelloWorldPanel {
     }
 
     //? render current editor text
-    const activeEditor = window.activeTextEditor;
+    HelloWorldPanel.currentPanel.changeActiveTextEditor(window.activeTextEditor)
+    /*const activeEditor = window.activeTextEditor;
 
     if (activeEditor) {
       const document = activeEditor.document;
@@ -101,12 +105,22 @@ export class HelloWorldPanel {
 
       // Kirim pesan ke Webview dengan 3 baris pertama
       HelloWorldPanel.currentPanel._panel.webview.postMessage({ command: 'updateContent', lines: previewText });
-    }
+    }*/
+  }
+
+  public changeActiveTextEditor(editor: TextEditor | undefined) {
+    if (!editor) return
+    // Ambil 3 baris pertama dari dokumen aktif
+    const firstThreeLines = editor.document.getText(new Range(0, 0, 3, 0));
+    // HelloWorldPanel.currentPanel.teaser(firstThreeLines);
+    // Kirim pesan ke Webview dengan 3 baris pertama
+    this._panel.webview.postMessage({ command: 'updateContent', lines: firstThreeLines });
+
   }
 
   public static revive(panel: WebviewPanel, extensionUri: Uri) {
-		HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, extensionUri);
-	}
+    HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, extensionUri);
+  }
 
   /**
    * Cleans up and disposes of webview resources when the webview panel is closed.
