@@ -17,6 +17,8 @@ export class HelloWorldPanel {
   private readonly _panel: WebviewPanel;
   private _disposables: Disposable[] = [];
 
+  public static readonly viewType = 'yupPreview';
+
   /**
    * The HelloWorldPanel class private constructor (called only from the render method).
    *
@@ -51,7 +53,7 @@ export class HelloWorldPanel {
       // If a webview panel does not already exist create and show a new one
       const panel = window.createWebviewPanel(
         // Panel view type
-        "yupPreview",
+        HelloWorldPanel.viewType, //"yupPreview",
         // Panel title
         "Hello World",
         // The editor column the panel should be displayed in
@@ -68,6 +70,10 @@ export class HelloWorldPanel {
       HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, extensionUri);
     }
   }
+
+  public static revive(panel: WebviewPanel, extensionUri: Uri) {
+		HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, extensionUri);
+	}
 
   /**
    * Cleans up and disposes of webview resources when the webview panel is closed.
