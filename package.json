@@ -9,15 +9,27 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onWebviewPanel:yupPreview"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "yup.start",
-        "title": "Yup Preview"
+        "title": "Yup Preview",
+        "icon": "$(open-preview)"
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "yup.start",
+          "when": "resourceExtname == .ts",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "install:all": "yarn && cd webview-ui && yarn",
