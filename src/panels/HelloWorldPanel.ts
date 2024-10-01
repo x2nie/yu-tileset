@@ -69,6 +69,39 @@ export class HelloWorldPanel {
 
       HelloWorldPanel.currentPanel = new HelloWorldPanel(panel, extensionUri);
     }
+
+    //? render current editor text
+    const activeEditor = window.activeTextEditor;
+
+    if (activeEditor) {
+      const document = activeEditor.document;
+
+      // Pastikan dokumen memiliki setidaknya 3 baris
+      const lineCount = Math.min(3, document.lineCount);
+      let firstThreeLines: string[] = [];
+
+      // Ambil teks dari 3 baris pertama
+      for (let i = 0; i < lineCount; i++) {
+        const lineText = document.lineAt(i).text;
+        firstThreeLines.push(lineText);
+      }
+
+      const previewText = firstThreeLines.join('\n');
+
+      // Buat panel Webview
+      // const panel = vscode.window.createWebviewPanel(
+      //   'previewPanel', // Identitas panel
+      //   'Preview Panel', // Judul panel
+      //   vscode.ViewColumn.Beside, // Tampilkan panel di samping
+      //   { enableScripts: true } // Izinkan penggunaan script di webview
+      // );
+
+      // // Isi konten HTML dasar di Webview
+      // panel.webview.html = getWebviewContent();
+
+      // Kirim pesan ke Webview dengan 3 baris pertama
+      HelloWorldPanel.currentPanel._panel.webview.postMessage({ command: 'updateContent', lines: previewText });
+    }
   }
 
   public static revive(panel: WebviewPanel, extensionUri: Uri) {
