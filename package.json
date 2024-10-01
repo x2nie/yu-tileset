@@ -2,7 +2,7 @@
   "name": "yup",
   "displayName": "Yup",
   "description": "MarkovJunior Programming Language",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.93.0"
   },
@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./out/src/extension.js",
+  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -20,10 +20,11 @@
     ]
   },
   "scripts": {
+    "install:all": "yarn && cd webview-ui && yarn",
+    "start:webview": "cd webview-ui && yarn start",
+    "build:webview": "cd webview-ui && yarn build",
     "vscode:prepublish": "yarn run compile",
-    "clean": "rimraf out/",
-    "copy": "copyfiles -u 1 media/**/*.css out/media/",
-    "compile": "yarn run clean && tsc -p ./ && yarn run copy",
+    "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src",

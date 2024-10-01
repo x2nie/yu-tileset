@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { HelloWorldPanel } from './panels/HelloWorldPanel';
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -8,11 +9,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.commands.registerCommand('yup.start', () => {
-			YupPreviewPanel.createOrShow(context.extensionUri);
+			// YupPreviewPanel.createOrShow(context.extensionUri);
+			HelloWorldPanel.render(context.extensionUri);
 		})
 	);
 }
-
+/*
 // This method is called when your extension is deactivated
 export function deactivate() {}
 
@@ -26,13 +28,9 @@ function getWebviewOptions(extensionUri: vscode.Uri): vscode.WebviewOptions {
 	};
 }
 
-/**
- * Manages cat coding webview panels
- */
+// * Manages cat coding webview panels
 class YupPreviewPanel {
-	/**
-	 * Track the currently panel. Only allow a single panel to exist at a time.
-	 */
+	//* Track the currently panel. Only allow a single panel to exist at a time.
 	public static currentPanel: YupPreviewPanel | undefined;
 
 	public static readonly viewType = 'yupPreview';
@@ -208,3 +206,4 @@ function getNonce() {
 	}
 	return text;
 }
+*/
