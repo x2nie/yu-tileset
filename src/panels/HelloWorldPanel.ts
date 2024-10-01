@@ -115,9 +115,14 @@ export class HelloWorldPanel {
     this.documentUri = editor.document.uri
     this.changeTextDocument(editor.document)
   }
-  public changeTextDocument(document: TextDocument) {
+  public changeTextDocument(document: TextDocument, cursorLine: number | undefined = undefined) {
+    // const lineCount = document.lineCount;
+    // const startLine = Math.max(0, cursorLine - 1); // Baris sebelum kursor
+    // const endLine = Math.min(lineCount - 1, cursorLine + 1); // Baris setelah kursor
+    const startLine = cursorLine || 0;
+   
     // Ambil 3 baris pertama dari dokumen aktif
-    const firstThreeLines = document.getText(new Range(0, 0, 3, 0));
+    const firstThreeLines = document.getText(new Range(startLine-1, 0, startLine-1+3, 0));
     // HelloWorldPanel.currentPanel.teaser(firstThreeLines);
     // Kirim pesan ke Webview dengan 3 baris pertama
     this._panel.webview.postMessage({ command: 'updateContent', lines: firstThreeLines });

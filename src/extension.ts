@@ -36,6 +36,14 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		})
 	);
+	
+	context.subscriptions.push( //Selection | cursor
+		vscode.window.onDidChangeTextEditorSelection(event => {
+			if (HelloWorldPanel.currentPanel && event.textEditor.document.uri.toString() === HelloWorldPanel.currentPanel.documentUri?.toString()) {
+				HelloWorldPanel.currentPanel.changeTextDocument(event.textEditor.document, event.selections[0].active.line);
+			}
+		})
+	);
 
 	//keep the panel open while vscode restart
 	if (vscode.window.registerWebviewPanelSerializer) {
