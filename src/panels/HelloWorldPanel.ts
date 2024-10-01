@@ -1,6 +1,7 @@
 import {
   Disposable, Webview, WebviewPanel, window, Uri, ViewColumn,
-  TextEditor, Range
+  TextEditor, Range,
+  TextDocument
 } from "vscode";
 import { getUri } from "../utilities/getUri";
 import { getNonce } from "../utilities/getNonce";
@@ -18,6 +19,7 @@ import { getNonce } from "../utilities/getNonce";
 export class HelloWorldPanel {
   public static currentPanel: HelloWorldPanel | undefined;
   private readonly _panel: WebviewPanel;
+  public documentUri: Uri | undefined = undefined; // the real doc that want to be presented inseide webview.
   private _disposables: Disposable[] = [];
 
   public static readonly viewType = 'yupPreview';
@@ -110,8 +112,12 @@ export class HelloWorldPanel {
 
   public changeActiveTextEditor(editor: TextEditor | undefined) {
     if (!editor) return
+    this.documentUri = editor.document.uri
+    this.changeTextDocument(editor.document)
+  }
+  public changeTextDocument(document: TextDocument) {
     // Ambil 3 baris pertama dari dokumen aktif
-    const firstThreeLines = editor.document.getText(new Range(0, 0, 3, 0));
+    const firstThreeLines = document.getText(new Range(0, 0, 3, 0));
     // HelloWorldPanel.currentPanel.teaser(firstThreeLines);
     // Kirim pesan ke Webview dengan 3 baris pertama
     this._panel.webview.postMessage({ command: 'updateContent', lines: firstThreeLines });

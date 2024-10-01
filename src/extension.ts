@@ -24,9 +24,18 @@ export function activate(context: vscode.ExtensionContext) {
 			// const firstThreeLines = editor.document.getText(new vscode.Range(0, 0, 3, 0));
 			// HelloWorldPanel.currentPanel.teaser(firstThreeLines);
 			HelloWorldPanel.currentPanel.changeActiveTextEditor(editor);
-     
         }
     }, null, context.subscriptions);
+
+
+	// Dengarkan event perubahan dokumen dan kirimkan perubahan ke Webview
+	context.subscriptions.push( //documentChangeListener
+		vscode.workspace.onDidChangeTextDocument(event => {
+			if (HelloWorldPanel.currentPanel && event.document.uri.toString() === HelloWorldPanel.currentPanel.documentUri?.toString()) {
+				HelloWorldPanel.currentPanel.changeTextDocument(event.document);
+			}
+		})
+	);
 
 	//keep the panel open while vscode restart
 	if (vscode.window.registerWebviewPanelSerializer) {
