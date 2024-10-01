@@ -1,4 +1,4 @@
-export const pi = 3.14;
+// export const pi = 3.14;
 
 // Self executing anonymous function
 // This is the main entry point
