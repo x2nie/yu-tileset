@@ -68,7 +68,9 @@ export class HelloWorldPanel {
           // Enable JavaScript in the webview
           enableScripts: true,
           // Restrict the webview to only load resources from the `out` and `webview-ui/build` directories
-          localResourceRoots: [Uri.joinPath(extensionUri, "out"), Uri.joinPath(extensionUri, "webview-ui/build")],
+          localResourceRoots: [
+            Uri.joinPath(extensionUri, "out"), 
+            Uri.joinPath(extensionUri, "webview-ui/build")],
         }
       );
 
@@ -163,10 +165,13 @@ export class HelloWorldPanel {
    * rendered within the webview panel
    */
   private _getWebviewContent(webview: Webview, extensionUri: Uri) {
+    // const baseUri = Uri.joinPath(extensionUri, "webview-ui", "build");
+    const baseUri = getUri(webview, extensionUri, ["webview-ui", "build"]);
     // The CSS file from the React build output
     const stylesUri = getUri(webview, extensionUri, ["webview-ui", "build", "assets", "index.css"]);
     // The JS file from the React build output
     const scriptUri = getUri(webview, extensionUri, ["webview-ui", "build", "assets", "index.js"]);
+    const templatetUri = getUri(webview, extensionUri, ["webview-ui", "build", "ui-templates.xml"]);
 
     const nonce = getNonce();
 
@@ -177,13 +182,16 @@ export class HelloWorldPanel {
         <head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+          <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'unsafe-eval' 'nonce-${nonce}';">
+          <!-- <base href="${baseUri}" /> -->
           <link rel="stylesheet" type="text/css" href="${stylesUri}">
           <title>Hello World</title>
+          <!-- <embed id="maintemplate" src="${baseUri}/ui-templates.xml"/> -->
         </head>
         <body>
           <div id="root"></div>
-          <script type="module" nonce="${nonce}" src="${scriptUri}"></script>
+          <!-- <script type="template" nonce="${nonce}" src="${templatetUri}"></script> -->
+          <script id="mainjs" type="module" nonce="${nonce}" src="${scriptUri}"></script>
         </body>
       </html>
     `;

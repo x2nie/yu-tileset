@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   plugins: [],
   build: {
+    target: 'esnext', //browsers can handle the latest ES features
     outDir: "build",
     rollupOptions: {
       output: {
