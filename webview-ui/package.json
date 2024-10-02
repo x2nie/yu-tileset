@@ -10,7 +10,8 @@
   "dependencies": {
     "@odoo/owl": "^2.4.0",
     "@rgrove/parse-xml": "^4.1.0",
-    "@vscode/webview-ui-toolkit": "^1.4.0"
+    "@vscode/webview-ui-toolkit": "^1.4.0",
+    "sass": "^1.79.4"
   },
   "devDependencies": {
     "@types/vscode-webview": "^1.57.0",

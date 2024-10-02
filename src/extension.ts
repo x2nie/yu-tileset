@@ -23,7 +23,10 @@ export function activate(context: vscode.ExtensionContext) {
 			// // Ambil 3 baris pertama dari dokumen aktif
 			// const firstThreeLines = editor.document.getText(new vscode.Range(0, 0, 3, 0));
 			// HelloWorldPanel.currentPanel.teaser(firstThreeLines);
-			HelloWorldPanel.currentPanel.changeActiveTextEditor(editor);
+			if (editor && isXmlFile(editor.document)) {
+				HelloWorldPanel.currentPanel.updateXmlText(editor);
+			} 
+			else HelloWorldPanel.currentPanel.changeActiveTextEditor(editor);
         }
     }, null, context.subscriptions);
 
@@ -57,6 +60,12 @@ export function activate(context: vscode.ExtensionContext) {
 			}
 		});
 	}
+}
+
+// Fungsi untuk mengecek apakah file adalah XML
+function isXmlFile(document: vscode.TextDocument): boolean {
+    // Cek apakah file memiliki ekstensi .xml atau languageId adalah xml
+    return document.languageId === 'xml' || document.fileName.toLowerCase().endsWith('.xml');
 }
 /*
 // This method is called when your extension is deactivated

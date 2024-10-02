@@ -128,7 +128,12 @@ export class HelloWorldPanel {
     // HelloWorldPanel.currentPanel.teaser(firstThreeLines);
     // Kirim pesan ke Webview dengan 3 baris pertama
     this._panel.webview.postMessage({ command: 'updateContent', lines: firstThreeLines });
-
+    
+  }
+  
+  public updateXmlText(editor: TextEditor){
+    this._panel.webview.postMessage({ command: 'updateXmlText', text: editor.document.getText()});
+    editor.document.getText()
   }
 
   public static revive(panel: WebviewPanel, extensionUri: Uri) {
