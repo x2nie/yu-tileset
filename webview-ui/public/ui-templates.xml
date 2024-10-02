@@ -1,0 +1,5 @@
+<templates>
+  <p t-name="greeting">
+    Welcome to templates world.
+  </p>
+</templates>
