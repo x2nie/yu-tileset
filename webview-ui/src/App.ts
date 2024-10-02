@@ -15,7 +15,7 @@ export default class App extends Component {
     setup(){
         this.state = useState({
             teaser:'',
-            tileset: [],
+            tileset: {children:[]},
         })
         onWillStart(async () =>{
             if(import.meta.env.MODE == 'development'){
@@ -40,8 +40,15 @@ export default class App extends Component {
                     break;
                 case 'updateXmlText':
                     // document.getElementById('from-host')!.innerHTML = message.lines
-                    console.log('parsedXML:', parseXml(message.text))
-                    this.state.teaser = message.text
+                    // console.log('parsedXML:', parseXml(message.text))
+                    // this.state.teaser = message.text
+                    try{
+                        const tileset = parseXml(message.text).children[0]
+                        console.log('parsedXML:', tileset)
+                        this.state.tileset = tileset//.children[0]
+                    } catch {
+
+                    }
                     break;
             }
           });
@@ -58,8 +65,6 @@ export default class App extends Component {
 
 App.template = xml`
     <h1>Hey Guys!</h1>
-    <button t-on-click="click_demo">How di</button>
-    <pre t-out="state.teaser" />
     <t t-if="state.tileset.children and state.tileset.children" t-foreach="state.tileset.children" t-as="section" t-key="section_index">
         
         <t t-if="section.name=='tiles'" >
@@ -72,7 +77,9 @@ App.template = xml`
             <hr/>
         </t>
     </t>
-        `
+    <button t-on-click="click_demo">How di</button>
+    <pre t-out="state.teaser" />
+    `
         // <t t-if="section.name=='tiles'" t-foreach="section.children" t-as="tile" t-key="tile_index">
         //     <div t-if="tile.name=='tile'" style="display:inline-block;border:1px solid blue;margin:5px;">
         //         <t t-out="tile.attributes.name" />
