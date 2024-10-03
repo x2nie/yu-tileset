@@ -2,7 +2,7 @@ import { loadFile, mount, reactive, whenReady } from '@odoo/owl'
 import App from "./App";
 
 // const [templates,models,palette] = await Promise.all([
-const [templates,tileset] = await Promise.all([
+const [templates0,tileset] = await Promise.all([
   // await loadFile("build/ui-templates.xml"),
   // await loadFile("Dungeon.ju.xml"),
   // await loadFile("static/models.xml"),
@@ -15,4 +15,9 @@ const [templates,tileset] = await Promise.all([
 // mount(App, document.body, {env, templates})
 const env = { sample: {tileset} };
 // mount(App, document.body, {templates, dev:true, env})
-mount(App, document.body, {dev:true})
+const templates = /*ht*/`<templates>
+  <p t-name="greeting">
+    Welcome to templates world.
+  </p>
+</templates>`
+mount(App, document.body, {templates, dev:true})

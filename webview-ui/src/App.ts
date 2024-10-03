@@ -71,13 +71,20 @@ export default class App extends Component {
 
 App.template = xml`
     <h1>Hey Guys!</h1>
-    <t t-if="state.tileset.children and state.tileset.children" t-foreach="state.tileset.children" t-as="section" t-key="section_index">
+    <!-- <t t-call="greeting" /> -->
+    <t t-if="state.tileset.children" t-foreach="state.tileset.children" t-as="section" t-key="section_index">
         
         <t t-if="section.name=='tiles'" >
             <t t-foreach="section.children" t-as="tile" t-key="tile_index">
                 <Tile t-if="tile.name=='tile'" grid="tile.grid" t-props="tile.attributes"/>
             </t>
             <hr/>
+        </t>
+        <t t-if="section.name=='neighbors'" >
+            <t t-foreach="section.children" t-as="neighbor" t-key="neighbor_index" t-if="neighbor.name=='neighbor'">
+                <!-- <Tile t-if="tile.name=='tile'" grid="tile.grid" t-props="tile.attributes"/> -->
+                 <pre t-out="window.JSON.stringify(neighbor.attributes)"/>
+            </t>
         </t>
     </t>
     <button t-on-click="click_demo">How di</button>
