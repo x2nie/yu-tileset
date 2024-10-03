@@ -14,4 +14,15 @@
         margin: 5px;
         text-align: center;
     }
+    p {
+        $size: 10px;
+        --cols: 1;
+        line-height: 1;
+        display: grid;
+        grid-template-columns: repeat(var(--cols), 1fr);
+
+        i {display: inline-block; width: $size; height: $size;}
+        [c="B"] {background: black;}
+        [c="Z"] {background: gray;}
+    }
 }
