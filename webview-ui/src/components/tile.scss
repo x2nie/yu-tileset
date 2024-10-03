@@ -1,15 +1,20 @@
 .tile {
     display: inline-block;
     margin: 5px;
-    .preview{
+    .preview-box{
         min-width: 80px;
-        max-width: 80px;
         min-height: 80px;
-        border: 1p solid orange;
-        padding: 5px;
-        background: silver;
+        // max-width: 80px;
+        box-sizing: border-box;
+        border: 1px solid ;
+        padding: 15px;
+        // background: silver;
         border-radius: 5px;
-        text-align: center;
+        // text-align: center;
+    }
+    .cube{
+        display: inline-block;
+        border: 1px dashed silver;
     }
     h4 {
         margin: 5px;
@@ -21,6 +26,7 @@
         width: calc(var(--cols) * $size);
         height: calc(var(--cols) * $size);
         line-height: 1;
+        margin: 0;
         // display: inline-block;
         display: inline-grid;
         // grid-template-columns: repeat(var(--cols), 1fr);
