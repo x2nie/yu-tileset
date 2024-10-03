@@ -4,6 +4,7 @@ import { vscode } from "./utilities/vscode";
 // import './App.scss'
 import "./App.css";
 import Tile from "./components/tile";
+import { parseTileset } from "./xml";
 
 
 export default class App extends Component {
@@ -20,8 +21,11 @@ export default class App extends Component {
         onWillStart(async () =>{
             if(import.meta.env.MODE == 'development'){
                 const raw = await loadFile('Dungeon.ju.xml')
-                const tileset = parseXml(raw).children[0]
+                // const tileset = parseXml(raw).children[0]
+                // console.log('parsedXML:', tileset)
+                const tileset = parseTileset(raw).children[0]
                 console.log('parsedXML:', tileset)
+                this.state.tileset = tileset//.children[0]
                 this.state.tileset = tileset//.children[0]
             }
         })
@@ -43,9 +47,11 @@ export default class App extends Component {
                     // console.log('parsedXML:', parseXml(message.text))
                     // this.state.teaser = message.text
                     try{
-                        const tileset = parseXml(message.text).children[0]
+                        // const tileset = parseXml(message.text).children[0]
+                        const tileset = parseTileset(message.text).children[0]
                         console.log('parsedXML:', tileset)
                         this.state.tileset = tileset//.children[0]
+                        // this.state.tileset = parseTileset(message.text).children[0]
                     } catch {
 
                     }
@@ -71,7 +77,7 @@ App.template = xml`
             <!-- <t t-out="section.children.length" /> -->
             <t t-foreach="section.children" t-as="tile" t-key="tile_index">
                 <!-- <div t-if="tile.name=='tile'" style="display:inline-block;border:1px solid blue;margin:5px;"> -->
-                    <Tile t-if="tile.name=='tile'" t-props="tile.attributes"/>
+                    <Tile t-if="tile.name=='tile'" grid="tile.grid" t-props="tile.attributes"/>
                 <!-- </div> -->
             </t>
             <hr/>
