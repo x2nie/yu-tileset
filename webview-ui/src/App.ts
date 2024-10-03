@@ -74,11 +74,8 @@ App.template = xml`
     <t t-if="state.tileset.children and state.tileset.children" t-foreach="state.tileset.children" t-as="section" t-key="section_index">
         
         <t t-if="section.name=='tiles'" >
-            <!-- <t t-out="section.children.length" /> -->
             <t t-foreach="section.children" t-as="tile" t-key="tile_index">
-                <!-- <div t-if="tile.name=='tile'" style="display:inline-block;border:1px solid blue;margin:5px;"> -->
-                    <Tile t-if="tile.name=='tile'" grid="tile.grid" t-props="tile.attributes"/>
-                <!-- </div> -->
+                <Tile t-if="tile.name=='tile'" grid="tile.grid" t-props="tile.attributes"/>
             </t>
             <hr/>
         </t>

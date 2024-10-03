@@ -17,19 +17,28 @@
     }
     p {
         $size: 18px;
-        --cols: 1;
+        --cols: 4;
+        width: calc(var(--cols) * $size);
+        height: calc(var(--cols) * $size);
         line-height: 1;
-        display: inline-block;
-        // display: grid;
+        // display: inline-block;
+        display: inline-grid;
         // grid-template-columns: repeat(var(--cols), 1fr);
+        grid-template-columns: repeat(var(--cols), 1fr);
+        grid-template-rows: repeat(var(--cols), 1fr);
         
 
         &::after {content: ''; clear: both;}
 
-        &.col-3 i:nth-child(3n+1) {clear: left;}
+        // &.col-3{
+        //     grid-template-columns: repeat(3, 1fr);
+        //     grid-template-rows: repeat(3, 1fr);
+        //     i:nth-child(3n+1) {clear: left;}
+        // } 
+            
 
-        i {width: $size; height: $size; float: left;}
-        [c="B"] {background: black;}
-        [c="Z"] {background: #ffffff;}
+        // i {width: $size; height: $size; float: left;}
+        [title="B"] {background: black;}
+        [title="Z"] {background: #ffffff;}
     }
 }
