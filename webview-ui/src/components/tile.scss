@@ -9,20 +9,27 @@
         padding: 5px;
         background: silver;
         border-radius: 5px;
+        text-align: center;
     }
-    h6 {
+    h4 {
         margin: 5px;
         text-align: center;
     }
     p {
-        $size: 10px;
+        $size: 18px;
         --cols: 1;
         line-height: 1;
-        display: grid;
-        grid-template-columns: repeat(var(--cols), 1fr);
+        display: inline-block;
+        // display: grid;
+        // grid-template-columns: repeat(var(--cols), 1fr);
+        
 
-        i {display: inline-block; width: $size; height: $size;}
+        &::after {content: ''; clear: both;}
+
+        &.col-3 i:nth-child(3n+1) {clear: left;}
+
+        i {width: $size; height: $size; float: left;}
         [c="B"] {background: black;}
-        [c="Z"] {background: gray;}
+        [c="Z"] {background: #ffffff;}
     }
 }
